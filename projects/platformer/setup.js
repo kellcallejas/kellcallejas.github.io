@@ -97,4 +97,6 @@ var collectableList = {
   kennedi: { image: "images/collectables/kennedi-head.png" },
   max: { image: "images/collectables/max-head.png" },
   steve: { image: "images/collectables/steve-head.png" },
+  star: {image: "https://static.vecteezy.com/system/resources/thumbnails/000/378/728/small_2x/Basic_Elements__28120_29.jpg"}
+
 };
