@@ -16,9 +16,17 @@
 			position: absolute;
 			top: 100px;
 			left: 0px;  /* <--- Change me! */
+			background-image: url("https://t4.ftcdn.net/jpg/04/98/26/77/360_F_498267738_85HlrSBiHjSpi4oaFur9W9I3USXN6mrl.jpg");
+			background-size: cover;
+			background-position: center;
+			background-repeat: no-repeat;
 		}
 		.board{
 			height: 100vh;
+			background-image: url("https://64.media.tumblr.com/0ad701ceadfe243be766ed2b7fef5028/63dd37ee4d90b5df-76/s1280x1920/b917ba8b9781a7c13b218682f1ba03784e086aca.webp");
+			background-size: cover;
+			background-position: center;
+			background-repeat: no-repeat;
 		}
 	</style>
 	<!-- 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
@@ -62,7 +70,10 @@
 			//////////////////////////////////////////////////////////////////
 			
 			// TODO 2 - Variable declarations 
-			
+			var positionX = 0;
+			var points = 0;
+			var speed = 10;
+
 
 			
 			/* 
@@ -71,7 +82,15 @@
 			turn it around! 
 			*/
 			function update() {
-				
+			positionX = positionX + speed;
+			moveBoxTo(positionX);
+			if (positionX > boardWidth) {
+				speed *= -1;}
+				if (positionX < -50) {
+					speed = -speed}
+
+			
+
 
 			};
 
@@ -81,8 +100,15 @@
 			the left side of the screen.
 			*/
 			function handleBoxClick() {
-				
-
+				positionX = 0;
+				points = points + 1
+				if (speed > 0) {
+					 speed + 3
+				} 
+				else if (speed < 0) {
+					speed - 3
+				}
+				changeBoxText(points);
 
 			};
 		})();
