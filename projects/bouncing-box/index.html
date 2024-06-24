@@ -1,117 +1,125 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<meta charset="utf-8">
-	<title>Bouncing Box</title>
-	<script src="jquery.min.js"></script>
-	<style>
-		.box {
-			width: 70px;
-			height: 70px;
-			background-color: teal;
-			font-size: 300%;
-			text-align: center;
-			user-select: none;
-			display: block;
-			position: absolute;
-			top: 100px;
-			left: 0px;  /* <--- Change me! */
-			background-image: url("https://t4.ftcdn.net/jpg/04/98/26/77/360_F_498267738_85HlrSBiHjSpi4oaFur9W9I3USXN6mrl.jpg");
-			background-size: cover;
-			background-position: center;
-			background-repeat: no-repeat;
-		}
-		.board{
-			height: 100vh;
-			background-image: url("https://64.media.tumblr.com/0ad701ceadfe243be766ed2b7fef5028/63dd37ee4d90b5df-76/s1280x1920/b917ba8b9781a7c13b218682f1ba03784e086aca.webp");
-			background-size: cover;
-			background-position: center;
-			background-repeat: no-repeat;
-		}
-	</style>
-	<!-- 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
+  <head>
+    <meta charset="utf-8" />
+    <title>Bouncing Box</title>
+    <script src="jquery.min.js"></script>
+    <style>
+      .box {
+        width: 70px;
+        height: 70px;
+        background-color: teal;
+        font-size: 300%;
+        text-align: center;
+        user-select: none;
+        display: block;
+        position: absolute;
+        top: 100px;
+        left: 0px; /* <--- Change me! */
+        background-image: url("https://t4.ftcdn.net/jpg/04/98/26/77/360_F_498267738_85HlrSBiHjSpi4oaFur9W9I3USXN6mrl.jpg");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+      .board {
+        height: 100vh;
+        background-image: url("https://64.media.tumblr.com/0ad701ceadfe243be766ed2b7fef5028/63dd37ee4d90b5df-76/s1280x1920/b917ba8b9781a7c13b218682f1ba03784e086aca.webp");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+    </style>
+    <!-- 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
+  </head>
+  <body class="board">
+    <!-- HTML for the box -->
+    <div class="box">?</div>
 
-</head>
-<body class="board">
-	<!-- HTML for the box -->
-	<div class="box">?</div>
+    <script>
+      (function () {
+        "use strict";
+        /* global jQuery */
 
-	<script>
-		(function(){
-			'use strict'
-			/* global jQuery */
+        //////////////////////////////////////////////////////////////////
+        /////////////////// SETUP DO NOT DELETE //////////////////////////
+        //////////////////////////////////////////////////////////////////
 
-			//////////////////////////////////////////////////////////////////
-			/////////////////// SETUP DO NOT DELETE //////////////////////////
-			//////////////////////////////////////////////////////////////////
-			
-			var box = jQuery('.box');	// reference to the HTML .box element
-			var board = jQuery('.board');	// reference to the HTML .board element
-			var boardWidth = board.width();	// the maximum X-Coordinate of the screen
+        var box = jQuery(".box"); // reference to the HTML .box element
+        var board = jQuery(".board"); // reference to the HTML .board element
+        var boardWidth = board.width(); // the maximum X-Coordinate of the screen
+        var boardHeight = jQuery(window).height();
+        // Every 50 milliseconds, call the update Function (see below)
+        setInterval(update, 50);
 
-			// Every 50 milliseconds, call the update Function (see below)
-			setInterval(update, 50);
-			
-			// Every time the box is clicked, call the handleBoxClick Function (see below)
-			box.on('click', handleBoxClick);
+        // Every time the box is clicked, call the handleBoxClick Function (see below)
+        box.on("click", handleBoxClick);
 
-			// moves the Box to a new position on the screen along the X-Axis
-			function moveBoxTo(newPositionX) {
-				box.css("left", newPositionX);
-			}
+        // moves the Box to a new position on the screen along the X-Axis
+        function moveBoxTo(newPositionX, newPositionY) {
+          box.css("left", newPositionX);
+          box.css("top", newPositionY);
+        }
 
-			// changes the text displayed on the Box
-			function changeBoxText(newText) {
-				box.text(newText);
-			}
+        // changes the text displayed on the Box
+        function changeBoxText(newText) {
+          box.text(newText);
+        }
 
-			//////////////////////////////////////////////////////////////////
-			/////////////////// YOUR CODE BELOW HERE /////////////////////////
-			//////////////////////////////////////////////////////////////////
-			
-			// TODO 2 - Variable declarations 
-			var positionX = 0;
-			var points = 0;
-			var speed = 10;
+        //////////////////////////////////////////////////////////////////
+        /////////////////// YOUR CODE BELOW HERE /////////////////////////
+        //////////////////////////////////////////////////////////////////
 
+        // TODO 2 - Variable declarations
+        var positionX = 0;
+        var points = 0;
+        var speedX = 10;
+        var positionY = 0;
+        var speedY = 10;
 
-			
-			/* 
+        /* 
 			This Function will be called 20 times/second. Each time it is called,
 			it should move the Box to a new location. If the box drifts off the screen
 			turn it around! 
 			*/
-			function update() {
-			positionX = positionX + speed;
-			moveBoxTo(positionX);
-			if (positionX > boardWidth) {
-				speed *= -1;}
-				if (positionX < -50) {
-					speed = -speed}
+        function update() {
+          positionX = positionX + speedX;
+		  positionY = positionY + speedY;
+          moveBoxTo(positionX, positionY);
+          if (positionX > boardWidth) {
+            speedX = -speedX;
+          }
+          if (positionX < -50) {
+            speedX = -speedX;
+          }
+          if (positionY > boardHeight) {
+            speedY = -speedY;
+          }
+          if (positionY <= 0) {
+            speedY = -speedY;
+          }
+        }
 
-			
-
-
-			};
-
-			/* 
+        /* 
 			This Function will be called each time the box is clicked. Each time it is called,
 			it should increase the points total, increase the speed, and move the box to
 			the left side of the screen.
 			*/
-			function handleBoxClick() {
-				positionX = 0;
-				points = points + 1
-				if (speed > 0) {
-					 speed + 3
-				} 
-				else if (speed < 0) {
-					speed - 3
-				}
-				changeBoxText(points);
-
-			};
-		})();
-	</script>
-</body>
+        function handleBoxClick() {
+          positionX = 0;
+          points = points + 1;
+          if (speedX > 0) {
+           speedX = speedX + 3;
+          } else if (speedX <= 0) {
+            speedX = speedX - 3;
+          }
+          if (speedY > 0) {
+           speedY = speedY + 3;
+          } else if (speedY <= 0) {
+           speedY = speedY - 3;
+          }
+          changeBoxText(points);
+        }
+      })();
+    </script>
+  </body>
 </html>
